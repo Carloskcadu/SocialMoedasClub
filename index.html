@@ -1,17 +1,11 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SocialMoeda Club - Transforme suas curtidas em dinheiro real. Ganhe PIX curtindo posts de famosos.">
-    <meta name="keywords" content="ganhar dinheiro, redes sociais, PIX, curtidas, Instagram, dinheiro online">
     <title>SocialMoeda Club - Ganhe Dinheiro nas Redes Sociais</title>
-    
-    <!-- Fontes e Ícones -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
     <style>
         * {
             margin: 0;
@@ -44,9 +38,39 @@
         .header-content {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             gap: 20px;
             flex-wrap: wrap;
+            position: relative;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-login {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .header-login a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .header-login a:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: white;
         }
 
         .logo {
@@ -438,6 +462,19 @@
             .header-content {
                 flex-direction: column;
                 gap: 15px;
+                justify-content: center;
+            }
+
+            .header-brand {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .header-login {
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
             }
             
             .logo {
@@ -501,10 +538,15 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="https://i.postimg.cc/XGhNt3fh/logo.png" alt="SocialMoeda Club Logo" class="logo">
-                <div class="header-text">
-                    <h1>SocialMoeda Club</h1>
-                    <p>Transforme suas curtidas em dinheiro real</p>
+                <div class="header-brand">
+                    <img src="https://i.postimg.cc/XGhNt3fh/logo.png" alt="SocialMoeda Club Logo" class="logo">
+                    <div class="header-text">
+                        <h1>SocialMoeda Club</h1>
+                        <p>Transforme suas curtidas em dinheiro real</p>
+                    </div>
+                </div>
+                <div class="header-login">
+                    <a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a>
                 </div>
             </div>
         </div>
@@ -652,11 +694,7 @@
         </div>
     </section>
 
-    <div class="login">
-        <div class="container">
-            <p>Já é membro? <a href="/login"><i class="fas fa-sign-in-alt"></i> Faça seu login aqui</a></p>
-        </div>
-    </div>
+
 
     <script>
         // Smooth scroll para links internos
@@ -689,4 +727,3 @@
     </script>
 </body>
 </html>
-```
