@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="SocialMoeda Club - Transforme suas curtidas em dinheiro real. Ganhe PIX curtindo posts de famosos." />
+    <meta name="keywords" content="ganhar dinheiro, redes sociais, PIX, curtidas, Instagram, dinheiro online"/>
+    <title>SocialMoeda Club - Ganhe Dinheiro nas Redes Sociais</title>
+
+    <!-- Fontes e Ícones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <img src="https://i.postimg.cc/XGhNt3fh/logo.png" alt="SocialMoeda Club Logo" class="logo">
+                <div class="header-text">
+                    <h1>SocialMoeda Club</h1>
+                    <p>Transforme suas curtidas em dinheiro real</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-image">
+                    <img src="https://i.postimg.cc/MMXKsXQV/foto-1.png" alt="Mulher sorrindo com celular e notificações de PIX recebido do SocialMoeda Club" />
+                </div>
+                <div class="hero-text">
+                    <h2>Ganhe Dinheiro Curtindo Posts de Famosos</h2>
+                    <p>A <strong>SocialMoeda Club</strong> conecta você diretamente com celebridades que precisam de engajamento. Cada curtida, comentário e compartilhamento se transforma em moedas que você converte em <strong>PIX instantâneo</strong>.</p>
+                    <a href="#planos" class="cta-button">
+                        <i class="fas fa-rocket"></i> Começar Agora
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ... restante das seções: features, planos, testimonials, login etc ... -->
+    
+    <div class="login">
+        <div class="container">
+            <p>Já é membro? <a href="#"><i class="fas fa-sign-in-alt"></i> Faça seu login aqui</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Scroll suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Fade-in on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .plano, .testimonial').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
