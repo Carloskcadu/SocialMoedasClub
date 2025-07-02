@@ -286,6 +286,10 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 500px;
         }
 
         .plano::before {
@@ -359,6 +363,7 @@
         .plano .beneficios {
             list-style: none;
             margin-bottom: 30px;
+            flex-grow: 1;
         }
 
         .plano .beneficios li {
@@ -389,6 +394,8 @@
             font-weight: 600;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            margin-top: auto;
+            align-self: center;
         }
 
         .plano:hover .btn {
