@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed - SocialMoeda Club</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fafafa;
+            color: #262626;
+            line-height: 1.4;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #dbdbdb;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 60px;
+        }
+
+        .header-content {
+            max-width: 975px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #f09433, #e6683c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .coins-counter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(45deg, #f09433, #e6683c);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(240,148,51,0.3);
+        }
+
+        .coins-icon {
+            font-size: 1.2rem;
+            color: #ffd700;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .saque-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .saque-btn:hover {
+            background: #219a52;
+            transform: translateY(-1px);
+        }
+
+        .logout-btn {
+            color: #262626;
+            text-decoration: none;
+            padding: 8px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #f0f0f0;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 975px;
+            margin: 80px auto 0;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 30px;
+        }
+
+        /* Feed */
+        .feed {
+            max-width: 614px;
+        }
+
+        .post {
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .post-header {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .post-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .post-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid transparent;
+            background: linear-gradient(45deg, #f09433, #e6683c);
+            padding: 2px;
+        }
+
+        .post-username {
+            font-weight: 600;
+            font-size: 14px;
+            color: #262626;
+        }
+
+        .post-verified {
+            color: #1da1f2;
+            font-size: 12px;
+        }
+
+        .post-options {
+            color: #262626;
+            cursor: pointer;
+        }
+
+        .post-image {
+            width: 100%;
+            max-height: 614px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .post-video {
+            width: 100%;
+            max-height: 614px;
+            object-fit: cover;
+        }
+
+        .post-actions {
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .post-actions-left {
+            display: flex;
+            gap: 16px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #262626;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .action-btn:hover {
+            opacity: 0.5;
+        }
+
+        .action-btn.liked {
+            color: #ed4956;
+            animation: likeAnimation 0.3s ease;
+        }
+
+        .action-btn.saved {
+            color: #262626;
+        }
+
+        @keyframes likeAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .post-likes {
+            padding: 0 16px 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .post-caption {
+            padding: 0 16px 8px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .post-username-caption {
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .post-comments {
+            padding: 0 16px 8px;
+            font-size: 14px;
+            color: #8e8e8e;
+            cursor: pointer;
+        }
+
+        .post-time {
+            padding: 0 16px 16px;
+            font-size: 10px;
+            color: #8e8e8e;
+            text-transform: uppercase;
+        }
+
+        .comment-form {
+            border-top: 1px solid #efefef;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .comment-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .comment-btn {
+            background: none;
+            border: none;
+            color: #0095f6;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .comment-btn:disabled {
+            opacity: 0.3;
+            cursor: default;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 90px;
+            height: fit-content;
+        }
+
+        .user-profile {
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid transparent;
+            background: linear-gradient(45deg, #f09433, #e6683c);
+            padding: 3px;
+        }
+
+        .user-details h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            color: #8e8e8e;
+            font-size: 0.9rem;
+        }
+
+        .earnings-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .earnings-title {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .earnings-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .earnings-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.8rem;
+        }
+
+        .suggestions {
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .suggestions h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #262626;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .suggestion-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .suggestion-info {
+            flex: 1;
+        }
+
+        .suggestion-username {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .suggestion-subtitle {
+            font-size: 12px;
+            color: #8e8e8e;
+        }
+
+        .follow-btn {
+            background: none;
+            border: none;
+            color: #0095f6;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* Coin Animation */
+        .coin-animation {
+            position: fixed;
+            pointer-events: none;
+            font-size: 20px;
+            font-weight: bold;
+            z-index: 10000;
+            animation: coinFloat 2s ease-out forwards;
+        }
+
+        @keyframes coinFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(1.5);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 0;
+                padding: 0;
+                margin-top: 60px;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+                order: -1;
+                margin-bottom: 20px;
+            }
+
+            .header-content {
+                padding: 0 15px;
+            }
+
+            .logo-text {
+                display: none;
+            }
+
+            .feed {
+                max-width: 100%;
+            }
+
+            .post {
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+        }
+
+        /* Stories */
+        .stories-container {
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .stories-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .stories {
+            display: flex;
+            gap: 14px;
+            min-width: max-content;
+        }
+
+        .story {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            min-width: 56px;
+        }
+
+        .story:hover {
+            transform: scale(1.05);
+        }
+
+        .story-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid transparent;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743);
+            padding: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .story.viewed .story-avatar {
+            background: #dbdbdb;
+        }
+
+        .story-username {
+            font-size: 12px;
+            margin-top: 4px;
+            max-width: 56px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #262626;
+        }
+
+        /* Story Modal */
+        .story-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .story-content {
+            position: relative;
+            width: 375px;
+            height: 667px;
+            background: black;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .story-progress {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            height: 3px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            overflow: hidden;
+            z-index: 3;
+        }
+
+        .story-progress-bar {
+            height: 100%;
+            background: white;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .story-header {
+            position: absolute;
+            top: 25px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 3;
+        }
+
+        .story-user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .story-user-info {
+            flex: 1;
+            color: white;
+        }
+
+        .story-user-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .story-time {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .story-close {
+            color: white;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .story-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .story-action-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .story-action-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Reels */
+        .reel-indicator {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .reel-post .post-image {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .reel-post .post-image::after {
+            content: '▶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 48px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        /* Follow buttons */
+        .follow-btn {
+            background: #0095f6;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .follow-btn:hover {
+            background: #0077cc;
+        }
+
+        .follow-btn.following {
+            background: #efefef;
+            color: #262626;
+            border: 1px solid #dbdbdb;
+        }
+
+        .follow-btn.following:hover {
+            background: #e0e0e0;
+        }
+
+        /* Enhanced post actions */
+        .post-stats {
+            padding: 0 16px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #8e8e8e;
+        }
+
+        .post-interactions {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Coin animation enhanced */
+        .coin-animation {
+            position: fixed;
+            pointer-events: none;
+            font-size: 20px;
+            font-weight: bold;
+            z-index: 10000;
+            animation: coinFloat 2s ease-out forwards;
+        }
+
+        .coin-animation.story-coin {
+            font-size: 24px;
+            color: #ffd700;
+        }
+
+        .coin-animation.follow-coin {
+            font-size: 18px;
+            color: #00d4aa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="https://i.postimg.cc/XGhNt3fh/logo.png" alt="SocialMoeda Club" class="logo">
+                <div class="logo-text">SocialMoeda</div>
+            </div>
+            
+            <div class="coins-counter">
+                <i class="fas fa-coins coins-icon"></i>
+                <span id="totalCoins">0.0</span> moedas
+            </div>
+
+            <div class="header-actions">
+                <button class="saque-btn" onclick="openSaqueModal()">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Sacar
+                </button>
+                <a href="/" class="logout-btn" title="Sair">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Feed -->
+        <div class="feed">
+            <!-- Stories -->
+            <div class="stories-container">
+                <div class="stories" id="stories">
+                    <!-- Stories serão geradas dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Posts -->
+            <div id="postsContainer">
+                <!-- Posts serão gerados dinamicamente -->
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- User Profile -->
+            <div class="user-profile">
+                <div class="user-info">
+                    <img src="keys/user-avatar?prompt=professional avatar of a young person smiling, modern style, high quality" alt="Seu perfil" class="user-avatar" id="userAvatar">
+                    <div class="user-details">
+                        <h3 id="userName">@usuario_social</h3>
+                        <p>Membro desde hoje</p>
+                    </div>
+                </div>
+
+                <div class="earnings-card">
+                    <div class="earnings-title">Seus Ganhos Hoje</div>
+                    <div class="earnings-amount" id="dailyEarnings">R$ 0,00</div>
+                    <div class="earnings-stats">
+                        <div>
+                            <div id="todayLikes">0</div>
+                            <div>Curtidas</div>
+                        </div>
+                        <div>
+                            <div id="todayComments">0</div>
+                            <div>Comentários</div>
+                        </div>
+                        <div>
+                            <div id="todayStories">0</div>
+                            <div>Stories</div>
+                        </div>
+                        <div>
+                            <div id="todayFollows">0</div>
+                            <div>Follows</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suggestions -->
+            <div class="suggestions">
+                <h4>Sugestões para Você</h4>
+                <div class="suggestion-item">
+                    <img src="keys/bianca-suggest?prompt=beautiful young woman influencer, professional headshot, friendly smile" alt="Bianca" class="suggestion-avatar">
+                    <div class="suggestion-info">
+                        <div class="suggestion-username">@bianca_vibes</div>
+                        <div class="suggestion-subtitle">Lifestyle • 120K seguidores</div>
+                    </div>
+                    <button class="follow-btn" onclick="followUser('bianca_vibes', this)">Seguir</button>
+                </div>
+                <div class="suggestion-item">
+                    <img src="keys/mateus-suggest?prompt=young man fitness influencer, athletic build, professional photo" alt="Mateus" class="suggestion-avatar">
+                    <div class="suggestion-info">
+                        <div class="suggestion-username">@mateus_strong</div>
+                        <div class="suggestion-subtitle">Fitness • 89K seguidores</div>
+                    </div>
+                    <button class="follow-btn" onclick="followUser('mateus_strong', this)">Seguir</button>
+                </div>
+                <div class="suggestion-item">
+                    <img src="keys/lara-suggest?prompt=young woman artist, creative style, bohemian aesthetic, professional photo" alt="Lara" class="suggestion-avatar">
+                    <div class="suggestion-info">
+                        <div class="suggestion-username">@lara_creates</div>
+                        <div class="suggestion-subtitle">Arte • 67K seguidores</div>
+                    </div>
+                    <button class="follow-btn" onclick="followUser('lara_creates', this)">Seguir</button>
+                </div>
+                <div class="suggestion-item">
+                    <img src="keys/joao-suggest?prompt=young man traveler, backpacker style, adventurous look, professional photo" alt="João" class="suggestion-avatar">
+                    <div class="suggestion-info">
+                        <div class="suggestion-username">@joao_explorer</div>
+                        <div class="suggestion-subtitle">Viagem • 145K seguidores</div>
+                    </div>
+                    <button class="follow-btn" onclick="followUser('joao_explorer', this)">Seguir</button>
+                </div>
+                <div class="suggestion-item">
+                    <img src="keys/priscila-suggest?prompt=young woman chef, professional kitchen outfit, warm smile" alt="Priscila" class="suggestion-avatar">
+                    <div class="suggestion-info">
+                        <div class="suggestion-username">@priscila_chef</div>
+                        <div class="suggestion-subtitle">Culinária • 78K seguidores</div>
+                    </div>
+                    <button class="follow-btn" onclick="followUser('priscila_chef', this)">Seguir</button>
+                </div>
+                <div class="suggestion-item">
+                    <img src="keys/vitor-suggest?prompt=young man musician with guitar, artistic style, professional photo" alt="Vitor" class="suggestion-avatar">
+                    <div class="suggestion-info">
+                        <div class="suggestion-username">@vitor_music</div>
+                        <div class="suggestion-subtitle">Música • 92K seguidores</div>
+                    </div>
+                    <button class="follow-btn" onclick="followUser('vitor_music', this)">Seguir</button>
+                </div>
+                <div class="suggestion-item">
+                    <img src="keys/daniela-suggest?prompt=young woman yoga instructor, peaceful expression, wellness style" alt="Daniela" class="suggestion-avatar">
+                    <div class="suggestion-info">
+                        <div class="suggestion-username">@daniela_zen</div>
+                        <div class="suggestion-subtitle">Yoga • 56K seguidores</div>
+                    </div>
+                    <button class="follow-btn" onclick="followUser('daniela_zen', this)">Seguir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Modal -->
+    <div id="storyModal" class="story-modal">
+        <div class="story-content">
+            <div class="story-progress">
+                <div class="story-progress-bar" id="storyProgressBar"></div>
+            </div>
+            <div class="story-header">
+                <img src="" alt="" class="story-user-avatar" id="storyUserAvatar">
+                <div class="story-user-info">
+                    <div class="story-user-name" id="storyUserName"></div>
+                    <div class="story-time" id="storyTime"></div>
+                </div>
+                <button class="story-close" onclick="closeStory()">×</button>
+            </div>
+            <img src="" alt="" class="story-image" id="storyImage">
+            <button class="story-action-btn" onclick="likeStory()">👍 Curtir Story (+1.0 moeda)</button>
+        </div>
+    </div>
+
+    <!-- Modal de Saque -->
+    <div id="saqueModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 10000; display: flex; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 30px; border-radius: 12px; max-width: 400px; width: 90%;">
+            <h3 style="margin-bottom: 20px; text-align: center;">💰 Sacar Moedas</h3>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="font-size: 2rem; font-weight: bold; color: #27ae60; margin-bottom: 10px;" id="modalCoins">0.0 moedas</div>
+                <div style="color: #666;" id="modalMoney">≈ R$ 0,00</div>
+            </div>
+            <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 15px; margin-bottom: 20px; text-align: center;">
+                <div style="color: #856404; font-weight: 600; font-size: 0.9rem;">
+                    💡 Valor Mínimo para Saque
+                </div>
+                <div style="color: #856404; font-size: 1.2rem; font-weight: bold; margin-top: 5px;">
+                    1000 moedas = R$ 50,00
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Chave PIX:</label>
+                <input type="text" id="pixKey" placeholder="Digite sua chave PIX" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="closeSaqueModal()" style="flex: 1; padding: 10px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer;">Cancelar</button>
+                <button onclick="processSaque()" style="flex: 1; padding: 10px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer;">Sacar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Estado global
+        let userCoins = 0;
+        let dailyLikes = 0;
+        let dailyComments = 0;
+        let dailyStories = 0;
+        let dailyShares = 0;
+        let dailyFollows = 0;
+        
+        // Dados dos posts
+        const posts = [
+            // Celebridades
+            {
+                id: 1,
+                username: 'brunomars',
+                verified: true,
+                avatar: 'keys/bruno-mars-avatar?prompt=Bruno Mars professional headshot photo, smiling, high quality',
+                image: 'keys/bruno-mars-concert?prompt=Bruno Mars performing on stage with microphone, concert lights, crowd cheering, professional photography',
+                likes: 2847392,
+                caption: '🎤 Ready for tonight\'s show! Who\'s coming? #BrunoMars #Concert #LiveMusic',
+                time: '2 horas',
+                comments: 15843,
+                shares: 2847
+            },
+            {
+                id: 2,
+                username: 'anitta',
+                verified: true,
+                avatar: 'keys/anitta-avatar?prompt=Anitta professional headshot photo, beautiful, glamorous',
+                image: 'keys/anitta-dance?prompt=Anitta dancing in colorful vibrant outfit, studio setting, professional photography',
+                likes: 1923847,
+                caption: '💃 Novo projeto chegando! Quem está animado? #Anitta #NewMusic #Brasil',
+                time: '4 horas',
+                comments: 8392,
+                shares: 1847
+            },
+            {
+                id: 3,
+                username: 'therock',
+                verified: true,
+                avatar: 'keys/the-rock-avatar?prompt=Dwayne The Rock Johnson professional headshot photo, confident smile',
+                image: 'keys/the-rock-gym?prompt=The Rock working out in modern gym, lifting weights, motivational scene',
+                likes: 3847291,
+                caption: '💪 Morning workout done! What\'s your excuse? #TheRock #Motivation #FitnessLife',
+                time: '6 horas',
+                isReel: true,
+                comments: 12847,
+                shares: 3921
+            },
+            
+            // Influencers e Criadores de Conteúdo
+            {
+                id: 4,
+                username: 'sofia_lifestyle',
+                verified: false,
+                avatar: 'keys/sofia-avatar?prompt=Beautiful young woman with long brown hair, professional headshot, natural makeup, friendly smile',
+                image: 'keys/sofia-morning?prompt=Beautiful woman in cozy morning routine, drinking coffee, natural lighting, aesthetic lifestyle photo',
+                likes: 89234,
+                caption: '☀️ Começando o dia com gratidão e café! Como vocês estão hoje? #MorningVibes #GoodVibes #Lifestyle',
+                time: '1 hora',
+                comments: 1247,
+                shares: 324
+            },
+            {
+                id: 5,
+                username: 'lucas_fitness',
+                verified: false,
+                avatar: 'keys/lucas-avatar?prompt=Athletic young man with brown hair, professional fitness headshot, confident expression',
+                image: 'keys/lucas-workout?prompt=Fit young man doing push-ups in modern gym, athletic wear, motivational fitness scene',
+                likes: 45892,
+                caption: '🔥 30 min de treino intenso! Quem topa o desafio? #Fitness #WorkoutMotivation #HealthyLife',
+                time: '3 horas',
+                isReel: true,
+                comments: 892,
+                shares: 445
+            },
+            {
+                id: 6,
+                username: 'maria_food',
+                verified: false,
+                avatar: 'keys/maria-avatar?prompt=Cheerful young woman with curly hair, chef apron, warm smile, food blogger style',
+                image: 'keys/maria-cooking?prompt=Woman cooking in beautiful modern kitchen, colorful healthy ingredients, food photography',
+                likes: 67123,
+                caption: '🍲 Receita nova no blog! Risotto de camarão que fica pronto em 20min #Food #Cooking #Recipe',
+                time: '5 horas',
+                comments: 1456,
+                shares: 789
+            },
+            {
+                id: 7,
+                username: 'rafael_travel',
+                verified: false,
+                avatar: 'keys/rafael-avatar?prompt=Young man with backpack, traveler style, outdoor headshot, adventurous smile',
+                image: 'keys/rafael-beach?prompt=Man on beautiful tropical beach at sunset, palm trees, paradise landscape, travel photography',
+                likes: 128456,
+                caption: '🏝️ Paraíso encontrado! Mais um destino incrível no Brasil #Travel #Beach #Paradise #Brasil',
+                time: '7 horas',
+                comments: 2134,
+                shares: 1567
+            },
+            {
+                id: 8,
+                username: 'ana_fashion',
+                verified: true,
+                avatar: 'keys/ana-avatar?prompt=Stylish young woman, fashion model style, elegant makeup, professional fashion headshot',
+                image: 'keys/ana-outfit?prompt=Fashionable woman in trendy outfit, street style photography, urban background, high fashion',
+                likes: 234567,
+                caption: '✨ Look do dia! Amando essa combinação de cores #Fashion #OOTD #Style #Trending',
+                time: '9 horas',
+                comments: 3456,
+                shares: 2890
+            },
+            {
+                id: 9,
+                username: 'pedro_music',
+                verified: false,
+                avatar: 'keys/pedro-avatar?prompt=Young musician with guitar, artistic headshot, creative lighting, music producer style',
+                image: 'keys/pedro-studio?prompt=Young man in music studio with guitar and recording equipment, creative workspace',
+                likes: 56789,
+                caption: '🎸 Nova música saindo em breve! Vocês estão prontos? #Music #NewSong #Studio #IndieMusic',
+                time: '11 horas',
+                isReel: true,
+                comments: 987,
+                shares: 567
+            },
+            {
+                id: 10,
+                username: 'camila_art',
+                verified: false,
+                avatar: 'keys/camila-avatar?prompt=Creative young woman artist, colorful paint on hands, artistic headshot, bohemian style',
+                image: 'keys/camila-painting?prompt=Woman painting on large canvas in art studio, colorful artwork, creative process',
+                likes: 43210,
+                caption: '🎨 Finalizando minha nova obra! Arte é terapia para a alma #Art #Painting #Creative #ArtLife',
+                time: '13 horas',
+                comments: 654,
+                shares: 321
+            },
+            {
+                id: 11,
+                username: 'bruno_tech',
+                verified: false,
+                avatar: 'keys/bruno-tech-avatar?prompt=Young tech professional with glasses, modern office headshot, confident tech worker',
+                image: 'keys/bruno-coding?prompt=Man working on multiple monitors with code, modern tech workspace, programming setup',
+                likes: 78901,
+                caption: '💻 Programando o futuro! Novo app quase pronto #Tech #Programming #Innovation #Developer',
+                time: '15 horas',
+                comments: 1123,
+                shares: 678
+            },
+            {
+                id: 12,
+                username: 'julia_dance',
+                verified: false,
+                avatar: 'keys/julia-avatar?prompt=Young dancer with athletic build, dance studio headshot, energetic expression',
+                image: 'keys/julia-dancing?prompt=Woman dancing in professional dance studio, dynamic movement, artistic lighting',
+                likes: 92345,
+                caption: '💃 Ensaio para a apresentação de amanhã! Dança é vida #Dance #Performance #Movement #Passion',
+                time: '17 horas',
+                isReel: true,
+                comments: 1567,
+                shares: 890
+            },
+            {
+                id: 13,
+                username: 'carlos_gym',
+                verified: false,
+                avatar: 'keys/carlos-avatar?prompt=Muscular young man, fitness trainer style, gym headshot, motivational expression',
+                image: 'keys/carlos-training?prompt=Personal trainer helping client in gym, fitness equipment, professional training session',
+                likes: 67890,
+                caption: '🏋️‍♂️ Treino de hoje foi intenso! Quem treinou hoje também? #Fitness #PersonalTrainer #Motivation',
+                time: '19 horas',
+                comments: 890,
+                shares: 445
+            },
+            {
+                id: 14,
+                username: 'leticia_beauty',
+                verified: true,
+                avatar: 'keys/leticia-avatar?prompt=Beautiful woman with perfect makeup, beauty influencer style, glamorous headshot',
+                image: 'keys/leticia-makeup?prompt=Woman applying makeup in ring light setup, beauty products, professional beauty content',
+                likes: 156789,
+                caption: '💄 Tutorial de hoje: make natural para o dia a dia! #Beauty #Makeup #Tutorial #MakeupArtist',
+                time: '21 horas',
+                comments: 2890,
+                shares: 1567
+            },
+            {
+                id: 15,
+                username: 'andre_photo',
+                verified: false,
+                avatar: 'keys/andre-avatar?prompt=Young photographer with camera, creative professional headshot, artistic style',
+                image: 'keys/andre-photoshoot?prompt=Photographer taking pictures in urban setting, professional camera equipment, street photography',
+                likes: 78234,
+                caption: '📸 Ensaio fotográfico incrível hoje! A arte está nos detalhes #Photography #Art #StreetPhoto',
+                time: '23 horas',
+                comments: 1234,
+                shares: 567
+            },
+            {
+                id: 16,
+                username: 'isabela_yoga',
+                verified: false,
+                avatar: 'keys/isabela-avatar?prompt=Peaceful young woman in yoga outfit, serene expression, wellness headshot',
+                image: 'keys/isabela-yoga?prompt=Woman doing yoga pose on beach at sunrise, peaceful meditation, wellness lifestyle',
+                likes: 89567,
+                caption: '🧘‍♀️ Encontrando paz interior com o nascer do sol #Yoga #Meditation #Wellness #Peace',
+                time: '1 dia',
+                comments: 1456,
+                shares: 890
+            },
+            {
+                id: 17,
+                username: 'gabriel_chef',
+                verified: false,
+                avatar: 'keys/gabriel-avatar?prompt=Young chef in professional kitchen, chef hat and apron, confident culinary professional',
+                image: 'keys/gabriel-cooking?prompt=Professional chef preparing gourmet dish in restaurant kitchen, culinary artistry',
+                likes: 123456,
+                caption: '👨‍🍳 Novo prato no menu! Gastronomia é arte e paixão #Chef #Gastronomy #Food #Culinary',
+                time: '1 dia',
+                isReel: true,
+                comments: 2345,
+                shares: 1234
+            },
+            {
+                id: 18,
+                username: 'fernanda_pet',
+                verified: false,
+                avatar: 'keys/fernanda-avatar?prompt=Young woman with cute dog, pet lover style, warm friendly headshot',
+                image: 'keys/fernanda-dog?prompt=Woman playing with golden retriever in park, happy pet moment, lifestyle photography',
+                likes: 67890,
+                caption: '🐕 Dia de diversão no parque com meu melhor amigo! #PetLove #Dogs #Happiness #BestFriend',
+                time: '1 dia',
+                comments: 987,
+                shares: 543
+            },
+            {
+                id: 19,
+                username: 'ricardo_moto',
+                verified: false,
+                avatar: 'keys/ricardo-avatar?prompt=Young man with motorcycle helmet, biker style, adventurous expression',
+                image: 'keys/ricardo-ride?prompt=Man on motorcycle on scenic mountain road, adventure travel, freedom lifestyle',
+                likes: 98765,
+                caption: '🏍️ Liberdade sobre duas rodas! Próximo destino: onde a estrada levar #Motorcycle #Adventure #Freedom',
+                time: '1 dia',
+                isReel: true,
+                comments: 1567,
+                shares: 890
+            },
+            {
+                id: 20,
+                username: 'amanda_books',
+                verified: false,
+                avatar: 'keys/amanda-avatar?prompt=Young woman with books, intellectual style, cozy library headshot, bookworm aesthetic',
+                image: 'keys/amanda-reading?prompt=Woman reading book in cozy cafe with coffee, intellectual lifestyle, book lover scene',
+                likes: 45678,
+                caption: '📚 Terminando mais um livro incrível! Qual foi sua última leitura? #Books #Reading #Literature',
+                time: '2 dias',
+                comments: 678,
+                shares: 234
+            },
+            {
+                id: 21,
+                username: 'thiago_skate',
+                verified: false,
+                avatar: 'keys/thiago-avatar?prompt=Young skateboarder with skateboard, urban style, energetic youth headshot',
+                image: 'keys/thiago-skating?prompt=Young man doing skateboard trick in skate park, dynamic action shot, urban sports',
+                likes: 76543,
+                caption: '🛹 Novo trick dominado! Prática leva à perfeição #Skateboard #Sports #Practice #UrbanLife',
+                time: '2 dias',
+                isReel: true,
+                comments: 890,
+                shares: 456
+            },
+            {
+                id: 22,
+                username: 'carolina_nature',
+                verified: false,
+                avatar: 'keys/carolina-avatar?prompt=Young woman in nature, outdoor enthusiast style, natural beauty headshot',
+                image: 'keys/carolina-hiking?prompt=Woman hiking in beautiful forest trail, nature photography, outdoor adventure',
+                likes: 87654,
+                caption: '🌲 Conectando com a natureza! Caminhada revigorante #Nature #Hiking #Outdoor #EcoLife',
+                time: '2 dias',
+                comments: 1123,
+                shares: 678
+            },
+            {
+                id: 23,
+                username: 'miguel_gamer',
+                verified: false,
+                avatar: 'keys/miguel-avatar?prompt=Young gamer with headset, gaming setup background, enthusiastic expression',
+                image: 'keys/miguel-gaming?prompt=Young man gaming with RGB setup, multiple monitors, professional gaming station',
+                likes: 65432,
+                caption: '🎮 Stream de hoje foi épica! GG para todos que acompanharam #Gaming #Stream #Esports #GG',
+                time: '2 dias',
+                isReel: true,
+                comments: 987,
+                shares: 432
+            },
+            {
+                id: 24,
+                username: 'patricia_coffee',
+                verified: false,
+                avatar: 'keys/patricia-avatar?prompt=Young woman barista, coffee shop style, friendly warm headshot',
+                image: 'keys/patricia-latte?prompt=Professional barista making latte art in cozy coffee shop, artisan coffee culture',
+                likes: 54321,
+                caption: '☕ Arte no café da manhã! Quem mais é viciado em café? #Coffee #LatteArt #Barista #CoffeeTime',
+                time: '3 dias',
+                comments: 765,
+                shares: 321
+            }
+        ];
+
+        // Dados dos stories
+        const storiesData = [
+            {
+                id: 'user',
+                username: 'Sua história',
+                avatar: 'keys/user-story-add?prompt=circular plus icon for adding story, modern social media style',
+                isUser: true
+            },
+            // Stories de celebridades e influencers
+            {
+                id: 1,
+                username: 'brunomars',
+                avatar: 'keys/bruno-mars-story-avatar?prompt=Bruno Mars circular story avatar with colorful gradient border',
+                image: 'keys/bruno-mars-story1?prompt=Bruno Mars backstage preparing for concert, behind the scenes moment',
+                viewed: false
+            },
+            {
+                id: 2,
+                username: 'anitta',
+                avatar: 'keys/anitta-story-avatar?prompt=Anitta circular story avatar with gradient border',
+                image: 'keys/anitta-story1?prompt=Anitta in recording studio working on new music, candid moment',
+                viewed: false
+            },
+            {
+                id: 3,
+                username: 'sofia_lifestyle',
+                avatar: 'keys/sofia-story-avatar?prompt=Beautiful young woman circular story avatar',
+                image: 'keys/sofia-story1?prompt=Woman having breakfast in bed, cozy morning routine, aesthetic lifestyle',
+                viewed: false
+            },
+            {
+                id: 4,
+                username: 'lucas_fitness',
+                avatar: 'keys/lucas-story-avatar?prompt=Athletic young man circular story avatar',
+                image: 'keys/lucas-story1?prompt=Young man drinking protein shake after workout, gym selfie style',
+                viewed: false
+            },
+            {
+                id: 5,
+                username: 'maria_food',
+                avatar: 'keys/maria-story-avatar?prompt=Young woman chef circular story avatar',
+                image: 'keys/maria-story1?prompt=Woman shopping for fresh ingredients at farmers market, food story',
+                viewed: false
+            },
+            {
+                id: 6,
+                username: 'rafael_travel',
+                avatar: 'keys/rafael-story-avatar?prompt=Young traveler man circular story avatar',
+                image: 'keys/rafael-story1?prompt=Man taking selfie on airplane window, travel adventure beginning',
+                viewed: false
+            },
+            {
+                id: 7,
+                username: 'ana_fashion',
+                avatar: 'keys/ana-story-avatar?prompt=Stylish young woman circular story avatar',
+                image: 'keys/ana-story1?prompt=Fashionable woman trying on clothes in boutique, shopping story',
+                viewed: false
+            },
+            {
+                id: 8,
+                username: 'pedro_music',
+                avatar: 'keys/pedro-story-avatar?prompt=Young musician circular story avatar',
+                image: 'keys/pedro-story1?prompt=Young man playing guitar in home studio, music creation process',
+                viewed: false
+            },
+            {
+                id: 9,
+                username: 'camila_art',
+                avatar: 'keys/camila-story-avatar?prompt=Creative young artist woman circular story avatar',
+                image: 'keys/camila-story1?prompt=Woman mixing colors on palette, art creation process, studio scene',
+                viewed: false
+            },
+            {
+                id: 10,
+                username: 'julia_dance',
+                avatar: 'keys/julia-story-avatar?prompt=Young dancer woman circular story avatar',
+                image: 'keys/julia-story1?prompt=Woman stretching before dance practice, backstage preparation',
+                viewed: false
+            },
+            {
+                id: 11,
+                username: 'leticia_beauty',
+                avatar: 'keys/leticia-story-avatar?prompt=Beautiful woman makeup artist circular story avatar',
+                image: 'keys/leticia-story1?prompt=Woman applying skincare routine, beauty morning ritual, ring light setup',
+                viewed: false
+            },
+            {
+                id: 12,
+                username: 'andre_photo',
+                avatar: 'keys/andre-story-avatar?prompt=Young photographer man circular story avatar',
+                image: 'keys/andre-story1?prompt=Photographer capturing sunset cityscape, behind the camera moment',
+                viewed: false
+            },
+            {
+                id: 13,
+                username: 'isabela_yoga',
+                avatar: 'keys/isabela-story-avatar?prompt=Peaceful young yoga woman circular story avatar',
+                image: 'keys/isabela-story1?prompt=Woman doing morning meditation on balcony, sunrise peaceful moment',
+                viewed: false
+            },
+            {
+                id: 14,
+                username: 'gabriel_chef',
+                avatar: 'keys/gabriel-story-avatar?prompt=Young professional chef circular story avatar',
+                image: 'keys/gabriel-story1?prompt=Chef tasting new recipe in restaurant kitchen, culinary creation',
+                viewed: false
+            },
+            {
+                id: 15,
+                username: 'fernanda_pet',
+                avatar: 'keys/fernanda-story-avatar?prompt=Young woman with pet circular story avatar',
+                image: 'keys/fernanda-story1?prompt=Woman giving treat to golden retriever, happy pet moment',
+                viewed: false
+            },
+            {
+                id: 16,
+                username: 'ricardo_moto',
+                avatar: 'keys/ricardo-story-avatar?prompt=Young biker man circular story avatar',
+                image: 'keys/ricardo-story1?prompt=Man checking motorcycle before road trip, adventure preparation',
+                viewed: false
+            },
+            {
+                id: 17,
+                username: 'amanda_books',
+                avatar: 'keys/amanda-story-avatar?prompt=Young bookworm woman circular story avatar',
+                image: 'keys/amanda-story1?prompt=Woman browsing books in cozy bookstore, literary lifestyle',
+                viewed: false
+            },
+            {
+                id: 18,
+                username: 'thiago_skate',
+                avatar: 'keys/thiago-story-avatar?prompt=Young skateboarder circular story avatar',
+                image: 'keys/thiago-story1?prompt=Young man arriving at skate park with skateboard, urban lifestyle',
+                viewed: false
+            },
+            {
+                id: 19,
+                username: 'carolina_nature',
+                avatar: 'keys/carolina-story-avatar?prompt=Young outdoor woman circular story avatar',
+                image: 'keys/carolina-story1?prompt=Woman setting up tent for camping, nature adventure preparation',
+                viewed: false
+            },
+            {
+                id: 20,
+                username: 'miguel_gamer',
+                avatar: 'keys/miguel-story-avatar?prompt=Young gamer man circular story avatar',
+                image: 'keys/miguel-story1?prompt=Gamer setting up streaming equipment, behind the scenes gaming',
+                viewed: false
+            },
+            // Stories adicionais para mais variedade
+            {
+                id: 21,
+                username: 'valentina_fit',
+                avatar: 'keys/valentina-story-avatar?prompt=Athletic young woman circular story avatar',
+                image: 'keys/valentina-story1?prompt=Woman doing morning run in park, fitness lifestyle story',
+                viewed: false
+            },
+            {
+                id: 22,
+                username: 'diego_surfer',
+                avatar: 'keys/diego-story-avatar?prompt=Young surfer man circular story avatar',
+                image: 'keys/diego-story1?prompt=Surfer checking waves at beach sunrise, ocean lifestyle',
+                viewed: false
+            },
+            {
+                id: 23,
+                username: 'luna_artist',
+                avatar: 'keys/luna-story-avatar?prompt=Creative young woman artist circular story avatar',
+                image: 'keys/luna-story1?prompt=Woman sketching in art journal at cafe, creative process',
+                viewed: false
+            },
+            {
+                id: 24,
+                username: 'enzo_mechanic',
+                avatar: 'keys/enzo-story-avatar?prompt=Young mechanic man circular story avatar',
+                image: 'keys/enzo-story1?prompt=Mechanic working on vintage car engine, hands-on craftsmanship',
+                viewed: false
+            }
+        ];
+
+        // Estado dos follows
+        let followedUsers = new Set();
+
+        // Gerar usernames aleatórios
+        const usernames = [
+            'lucasvibes_', 'maria_dreams', 'carlos_music', 'ana_stars', 'pedro_cool',
+            'sofia_shine', 'bruno_beats', 'julia_magic', 'rafael_flow', 'camila_glow'
+        ];
+
+        // Inicialização
+        function init() {
+            generateUserProfile();
+            generateStories();
+            generatePosts();
+            updateStats();
+        }
+
+        // Gerar perfil do usuário
+        function generateUserProfile() {
+            const randomUsername = usernames[Math.floor(Math.random() * usernames.length)];
+            document.getElementById('userName').textContent = '@' + randomUsername;
+        }
+
+        // Gerar stories
+        function generateStories() {
+            const storiesContainer = document.getElementById('stories');
+            
+            storiesData.forEach(story => {
+                const storyEl = document.createElement('div');
+                storyEl.className = `story ${story.viewed ? 'viewed' : ''}`;
+                storyEl.innerHTML = `
+                    <img src="${story.avatar}" alt="${story.username}" class="story-avatar">
+                    <div class="story-username">${story.username}</div>
+                `;
+                
+                if (!story.isUser) {
+                    storyEl.addEventListener('click', () => openStory(story));
+                }
+                
+                storiesContainer.appendChild(storyEl);
+            });
+        }
+
+        // Gerar posts
+        function generatePosts() {
+            const container = document.getElementById('postsContainer');
+            
+            posts.forEach(post => {
+                const postEl = document.createElement('div');
+                postEl.className = `post ${post.isReel ? 'reel-post' : ''}`;
+                postEl.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-user">
+                            <img src="${post.avatar}" alt="${post.username}" class="post-avatar">
+                            <span class="post-username">${post.username}</span>
+                            ${post.verified ? '<i class="fas fa-check-circle post-verified"></i>' : ''}
+                        </div>
+                        <button class="follow-btn" onclick="followUser('${post.username}', this)" id="follow-${post.username}">
+                            Seguir
+                        </button>
+                    </div>
+                    
+                    <div style="position: relative;">
+                        ${post.isReel ? '<div class="reel-indicator">REELS</div>' : ''}
+                        <img src="${post.image}" alt="Post de ${post.username}" class="post-image" ${post.isReel ? 'onclick="playReel(this)"' : ''}>
+                    </div>
+                    
+                    <div class="post-actions">
+                        <div class="post-actions-left">
+                            <button class="action-btn like-btn" onclick="likePost(${post.id}, this)">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="action-btn comment-btn" onclick="focusComment(${post.id})">
+                                <i class="far fa-comment"></i>
+                            </button>
+                            <button class="action-btn share-btn" onclick="sharePost(${post.id}, this)">
+                                <i class="far fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <button class="action-btn save-btn" onclick="savePost(${post.id}, this)">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="post-likes">
+                        <span id="likes-${post.id}">${formatNumber(post.likes)}</span> curtidas
+                    </div>
+                    
+                    <div class="post-stats">
+                        <div class="post-interactions">
+                            <span>${formatNumber(post.comments)} comentários</span>
+                            <span>${formatNumber(post.shares)} compartilhamentos</span>
+                        </div>
+                        <span>${post.time}</span>
+                    </div>
+                    
+                    <div class="post-caption">
+                        <span class="post-username-caption">${post.username}</span>
+                        ${post.caption}
+                    </div>
+                    
+                    <div class="post-comments">
+                        Ver todos os ${formatNumber(post.comments)} comentários
+                    </div>
+                    
+                    <div class="comment-form">
+                        <input type="text" class="comment-input" id="comment-${post.id}" placeholder="Adicione um comentário...">
+                        <button class="comment-btn" onclick="addComment(${post.id})">Publicar</button>
+                    </div>
+                `;
+                container.appendChild(postEl);
+            });
+        }
+
+        // Curtir post
+        function likePost(postId, button) {
+            const icon = button.querySelector('i');
+            const likesEl = document.getElementById(`likes-${postId}`);
+            const currentLikes = parseInt(likesEl.textContent.replace(/\D/g, ''));
+            
+            if (button.classList.contains('liked')) {
+                // Remover curtida
+                button.classList.remove('liked');
+                icon.className = 'far fa-heart';
+                likesEl.textContent = formatNumber(currentLikes - 1);
+                userCoins -= 0.25;
+                dailyLikes--;
+            } else {
+                // Adicionar curtida
+                button.classList.add('liked');
+                icon.className = 'fas fa-heart';
+                likesEl.textContent = formatNumber(currentLikes + 1);
+                userCoins += 0.25;
+                dailyLikes++;
+                
+                // Animação de moedas
+                showCoinAnimation(button, '+0.25');
+            }
+            
+            updateStats();
+        }
+
+        // Salvar post
+        function savePost(postId, button) {
+            const icon = button.querySelector('i');
+            
+            if (button.classList.contains('saved')) {
+                button.classList.remove('saved');
+                icon.className = 'far fa-bookmark';
+            } else {
+                button.classList.add('saved');
+                icon.className = 'fas fa-bookmark';
+            }
+        }
+
+        // Focar no input de comentário
+        function focusComment(postId) {
+            document.getElementById(`comment-${postId}`).focus();
+        }
+
+        // Adicionar comentário
+        function addComment(postId) {
+            const input = document.getElementById(`comment-${postId}`);
+            const comment = input.value.trim();
+            
+            if (comment) {
+                userCoins += 0.75;
+                dailyComments++;
+                input.value = '';
+                
+                // Animação de moedas
+                showCoinAnimation(input, '+0.75');
+                updateStats();
+                
+                // Feedback visual
+                const originalPlaceholder = input.placeholder;
+                input.placeholder = 'Comentário adicionado! +0.75 moedas';
+                setTimeout(() => {
+                    input.placeholder = originalPlaceholder;
+                }, 2000);
+            }
+        }
+
+        // Seguir usuário
+        function followUser(username, button) {
+            if (followedUsers.has(username)) {
+                // Deixar de seguir
+                followedUsers.delete(username);
+                button.textContent = 'Seguir';
+                button.classList.remove('following');
+                userCoins -= 1.0; // Remove moedas ao deixar de seguir
+                dailyFollows--; // Decrementar contador
+            } else {
+                // Seguir
+                followedUsers.add(username);
+                button.textContent = 'Seguindo';
+                button.classList.add('following');
+                userCoins += 1.0; // Ganha 1 moeda por seguir
+                dailyFollows++; // Incrementar contador
+                
+                // Animação de moedas
+                showCoinAnimation(button, '+1.0', 'follow-coin');
+            }
+            
+            updateStats();
+        }
+
+        // Compartilhar post
+        function sharePost(postId, button) {
+            userCoins += 0.5; // Ganha 0.5 moeda por compartilhar
+            dailyShares++; // Incrementar contador
+            showCoinAnimation(button, '+0.5');
+            updateStats();
+            
+            // Feedback visual
+            const originalIcon = button.querySelector('i').className;
+            button.querySelector('i').className = 'fas fa-paper-plane';
+            button.style.color = '#0095f6';
+            
+            setTimeout(() => {
+                button.querySelector('i').className = originalIcon;
+                button.style.color = '#262626';
+            }, 2000);
+        }
+
+        // Reproduzir reel
+        function playReel(element) {
+            userCoins += 0.15; // Ganha 0.15 moedas por assistir reel
+            showCoinAnimation(element, '+0.15');
+            updateStats();
+            
+            // Simular reprodução
+            element.style.opacity = '0.7';
+            setTimeout(() => {
+                element.style.opacity = '1';
+            }, 1000);
+        }
+
+        // Abrir story
+        function openStory(story) {
+            const modal = document.getElementById('storyModal');
+            const storyImage = document.getElementById('storyImage');
+            const storyUserAvatar = document.getElementById('storyUserAvatar');
+            const storyUserName = document.getElementById('storyUserName');
+            const storyTime = document.getElementById('storyTime');
+            const progressBar = document.getElementById('storyProgressBar');
+            
+            // Configurar modal
+            storyImage.src = story.image;
+            storyUserAvatar.src = story.avatar;
+            storyUserName.textContent = story.username;
+            storyTime.textContent = 'há 1h';
+            
+            modal.style.display = 'flex';
+            
+            // Animar barra de progresso
+            progressBar.style.width = '0%';
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+                progressBar.style.transition = 'width 5s linear';
+            }, 100);
+            
+            // Fechar automaticamente após 5 segundos
+            setTimeout(() => {
+                closeStory();
+            }, 5000);
+            
+            // Marcar como visto
+            story.viewed = true;
+            const storyElement = document.querySelector(`.story:nth-child(${storiesData.indexOf(story) + 1})`);
+            if (storyElement) {
+                storyElement.classList.add('viewed');
+            }
+        }
+
+        // Fechar story
+        function closeStory() {
+            document.getElementById('storyModal').style.display = 'none';
+        }
+
+        // Curtir story
+        function likeStory() {
+            userCoins += 0.5; // Ganha 0.5 moeda por curtir story
+            dailyStories++; // Incrementar contador de stories
+            showCoinAnimation(document.querySelector('.story-action-btn'), '+0.5', 'story-coin');
+            updateStats();
+            
+            // Feedback visual
+            const button = document.querySelector('.story-action-btn');
+            button.textContent = '❤️ Story curtido! (+0.5 moeda)';
+            button.style.background = 'rgba(255,0,0,0.8)';
+            
+            setTimeout(() => {
+                button.textContent = '👍 Curtir Story (+0.5 moeda)';
+                button.style.background = 'rgba(255,255,255,0.2)';
+            }, 2000);
+        }
+
+        // Animação de moedas aprimorada
+        function showCoinAnimation(element, amount, type = 'coin-animation') {
+            const rect = element.getBoundingClientRect();
+            const coinEl = document.createElement('div');
+            coinEl.className = `coin-animation ${type}`;
+            coinEl.textContent = amount + ' 🪙';
+            coinEl.style.left = rect.left + rect.width / 2 + 'px';
+            coinEl.style.top = rect.top + 'px';
+            
+            if (type === 'follow-coin') {
+                coinEl.style.color = '#00d4aa';
+                coinEl.textContent = amount + ' 💚';
+            } else if (type === 'story-coin') {
+                coinEl.style.color = '#ffd700';
+                coinEl.textContent = amount + ' ⭐';
+            } else {
+                coinEl.style.color = '#ffd700';
+            }
+            
+            document.body.appendChild(coinEl);
+            
+            setTimeout(() => {
+                coinEl.remove();
+            }, 2000);
+        }
+
+        // Atualizar estatísticas
+        function updateStats() {
+            const totalCoinsEl = document.getElementById('totalCoins');
+            const dailyEarningsEl = document.getElementById('dailyEarnings');
+            const todayLikesEl = document.getElementById('todayLikes');
+            const todayCommentsEl = document.getElementById('todayComments');
+            const todayStoriesEl = document.getElementById('todayStories');
+            const todayFollowsEl = document.getElementById('todayFollows');
+            
+            if (totalCoinsEl) totalCoinsEl.textContent = userCoins.toFixed(1);
+            if (dailyEarningsEl) dailyEarningsEl.textContent = 'R$ ' + (userCoins * 0.05).toFixed(2);
+            if (todayLikesEl) todayLikesEl.textContent = dailyLikes;
+            if (todayCommentsEl) todayCommentsEl.textContent = dailyComments;
+            if (todayStoriesEl) todayStoriesEl.textContent = dailyStories;
+            if (todayFollowsEl) todayFollowsEl.textContent = dailyFollows;
+        }
+
+        // Formatar números
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        // Modal de saque
+        function openSaqueModal() {
+            document.getElementById('modalCoins').textContent = userCoins.toFixed(1) + ' moedas';
+            document.getElementById('modalMoney').textContent = '≈ R$ ' + (userCoins * 0.05).toFixed(2);
+            document.getElementById('saqueModal').style.display = 'flex';
+        }
+
+        function closeSaqueModal() {
+            document.getElementById('saqueModal').style.display = 'none';
+        }
+
+        function processSaque() {
+            const pixKey = document.getElementById('pixKey').value.trim();
+            
+            if (!pixKey) {
+                alert('Por favor, insira sua chave PIX');
+                return;
+            }
+            
+            if (userCoins < 1000) {
+                alert('Saque mínimo: 1000 moedas (R$ 50,00)');
+                return;
+            }
+            
+            alert(`Saque de ${userCoins.toFixed(1)} moedas (R$ ${(userCoins * 0.05).toFixed(2)}) solicitado!\nProcessamento em até 24h.`);
+            
+            // Reset das moedas
+            userCoins = 0;
+            updateStats();
+            closeSaqueModal();
+        }
+
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Posts adicionais para scroll infinito
+        const morePosts = [
+            {
+                id: 25,
+                username: 'valentina_fit',
+                verified: false,
+                avatar: 'keys/valentina-avatar?prompt=Athletic young woman with sports outfit, fitness motivation headshot',
+                image: 'keys/valentina-running?prompt=Athletic woman running on beach at sunset, fitness lifestyle, inspirational',
+                likes: 76543,
+                caption: '🏃‍♀️ Corrida matinal na praia! Energia renovada para o dia #Running #Fitness #BeachRun #Motivation',
+                time: '30 min',
+                comments: 1098,
+                shares: 567
+            },
+            {
+                id: 26,
+                username: 'diego_surfer',
+                verified: false,
+                avatar: 'keys/diego-avatar?prompt=Young surfer man with blonde hair, ocean lifestyle, beach headshot',
+                image: 'keys/diego-waves?prompt=Surfer riding perfect wave, ocean sports, dramatic action shot',
+                likes: 123890,
+                caption: '🏄‍♂️ Ondas perfeitas hoje! Vida é sobre pegar a onda certa #Surf #Ocean #Waves #LifeStyle',
+                time: '45 min',
+                isReel: true,
+                comments: 2345,
+                shares: 1234
+            },
+            {
+                id: 27,
+                username: 'luna_artist',
+                verified: false,
+                avatar: 'keys/luna-avatar?prompt=Creative young woman with artistic style, bohemian aesthetic, painter headshot',
+                image: 'keys/luna-mural?prompt=Woman painting colorful street mural, urban art, creative expression',
+                likes: 89012,
+                caption: '🎨 Novo mural finalizado! Arte urbana transforma a cidade #StreetArt #Mural #UrbanArt #CreativeLife',
+                time: '1 hora',
+                comments: 1456,
+                shares: 890
+            },
+            {
+                id: 28,
+                username: 'enzo_mechanic',
+                verified: false,
+                avatar: 'keys/enzo-avatar?prompt=Young mechanic with tools, working hands, automotive professional headshot',
+                image: 'keys/enzo-vintage?prompt=Mechanic restoring classic vintage car, automotive craftsmanship, garage workshop',
+                likes: 67234,
+                caption: '🔧 Restaurando um clássico dos anos 70! Paixão por carros antigos #ClassicCars #Restoration #Vintage',
+                time: '2 horas',
+                comments: 987,
+                shares: 456
+            },
+            {
+                id: 29,
+                username: 'maya_dancer',
+                verified: false,
+                avatar: 'keys/maya-avatar?prompt=Young ballet dancer, elegant pose, classical dance headshot',
+                image: 'keys/maya-ballet?prompt=Ballet dancer in elegant pose at dance studio, classical dance artistry',
+                likes: 95678,
+                caption: '🩰 Ensaio para o espetáculo de fim de ano! Ballet é poesia em movimento #Ballet #Dance #Classical',
+                time: '3 horas',
+                isReel: true,
+                comments: 1567,
+                shares: 789
+            },
+            {
+                id: 30,
+                username: 'gustavo_barber',
+                verified: false,
+                avatar: 'keys/gustavo-avatar?prompt=Young professional barber, stylish appearance, barbershop headshot',
+                image: 'keys/gustavo-cut?prompt=Professional barber giving stylish haircut, modern barbershop, grooming artistry',
+                likes: 54321,
+                caption: '✂️ Mais um corte top! Estilo e atitude fazem a diferença #Barber #Style #Haircut #Grooming',
+                time: '4 horas',
+                comments: 876,
+                shares: 321
+            }
+        ];
+
+        // Função para carregar mais posts (scroll infinito)
+        function loadMorePosts() {
+            const container = document.getElementById('postsContainer');
+            let startId = posts.length + 1;
+            
+            morePosts.forEach((post, index) => {
+                const newPost = { ...post, id: startId + index };
+                const postEl = document.createElement('div');
+                postEl.className = `post ${newPost.isReel ? 'reel-post' : ''}`;
+                postEl.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-user">
+                            <img src="${newPost.avatar}" alt="${newPost.username}" class="post-avatar">
+                            <span class="post-username">${newPost.username}</span>
+                            ${newPost.verified ? '<i class="fas fa-check-circle post-verified"></i>' : ''}
+                        </div>
+                        <button class="follow-btn" onclick="followUser('${newPost.username}', this)" id="follow-${newPost.username}">
+                            Seguir
+                        </button>
+                    </div>
+                    
+                    <div style="position: relative;">
+                        ${newPost.isReel ? '<div class="reel-indicator">REELS</div>' : ''}
+                        <img src="${newPost.image}" alt="Post de ${newPost.username}" class="post-image" ${newPost.isReel ? 'onclick="playReel(this)"' : ''}>
+                    </div>
+                    
+                    <div class="post-actions">
+                        <div class="post-actions-left">
+                            <button class="action-btn like-btn" onclick="likePost(${newPost.id}, this)">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="action-btn comment-btn" onclick="focusComment(${newPost.id})">
+                                <i class="far fa-comment"></i>
+                            </button>
+                            <button class="action-btn share-btn" onclick="sharePost(${newPost.id}, this)">
+                                <i class="far fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <button class="action-btn save-btn" onclick="savePost(${newPost.id}, this)">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="post-likes">
+                        <span id="likes-${newPost.id}">${formatNumber(newPost.likes)}</span> curtidas
+                    </div>
+                    
+                    <div class="post-stats">
+                        <div class="post-interactions">
+                            <span>${formatNumber(newPost.comments)} comentários</span>
+                            <span>${formatNumber(newPost.shares)} compartilhamentos</span>
+                        </div>
+                        <span>${newPost.time}</span>
+                    </div>
+                    
+                    <div class="post-caption">
+                        <span class="post-username-caption">${newPost.username}</span>
+                        ${newPost.caption}
+                    </div>
+                    
+                    <div class="post-comments">
+                        Ver todos os ${formatNumber(newPost.comments)} comentários
+                    </div>
+                    
+                    <div class="comment-form">
+                        <input type="text" class="comment-input" id="comment-${newPost.id}" placeholder="Adicione um comentário...">
+                        <button class="comment-btn" onclick="addComment(${newPost.id})">Publicar</button>
+                    </div>
+                `;
+                container.appendChild(postEl);
+            });
+        }
+
+        // Detectar scroll para carregar mais posts
+        let isLoading = false;
+        window.addEventListener('scroll', () => {
+            if (isLoading) return;
+            
+            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+            
+            if (scrollTop + clientHeight >= scrollHeight - 1000) {
+                isLoading = true;
+                setTimeout(() => {
+                    loadMorePosts();
+                    isLoading = false;
+                }, 1000);
+            }
+        });
+
+        // Simular novos stories aparecendo
+        function addRandomStory() {
+            const newStoryUsers = [
+                'marcos_fit', 'jessica_travel', 'paulo_music', 'carla_food', 'renato_photo'
+            ];
+            
+            const randomUser = newStoryUsers[Math.floor(Math.random() * newStoryUsers.length)];
+            const newStory = {
+                id: Date.now(),
+                username: randomUser,
+                avatar: `keys/${randomUser}-story?prompt=${randomUser} circular story avatar`,
+                image: `keys/${randomUser}-story-content?prompt=${randomUser} daily activity story`,
+                viewed: false
+            };
+            
+            storiesData.push(newStory);
+            
+            // Adicionar visualmente
+            const storiesContainer = document.getElementById('stories');
+            const storyEl = document.createElement('div');
+            storyEl.className = 'story';
+            storyEl.innerHTML = `
+                <img src="${newStory.avatar}" alt="${newStory.username}" class="story-avatar">
+                <div class="story-username">${newStory.username}</div>
+            `;
+            storyEl.addEventListener('click', () => openStory(newStory));
+            storiesContainer.appendChild(storyEl);
+        }
+
+        // Adicionar novos stories periodicamente
+        setInterval(addRandomStory, 45000); // A cada 45 segundos
+    </script>
+</body>
+</html>
