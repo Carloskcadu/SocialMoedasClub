@@ -333,7 +333,7 @@
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-home">
+    <a href="/" class="back-home">
         <i class="fas fa-arrow-left"></i>
         Voltar ao Início
     </a>
@@ -410,10 +410,10 @@
                 // Remover loading (em caso real, isso seria após a resposta da API)
                 loginContainer.classList.remove('loading');
                 
-                // Exemplo de redirecionamento
-                // window.location.href = '/dashboard';
+                // Redirecionar para o dashboard
+                window.location.href = 'dashboard.html';
                 
-                alert('Login realizado com sucesso! (Esta é apenas uma demonstração)');
+                // alert('Login realizado com sucesso! (Esta é apenas uma demonstração)');
             }, 2000);
         });
 
