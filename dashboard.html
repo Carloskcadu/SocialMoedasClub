@@ -753,7 +753,7 @@
                     <i class="fas fa-money-bill-wave"></i>
                     Sacar
                 </button>
-                <a href="/" class="logout-btn" title="Sair">
+                <a href="#" class="logout-btn" title="Sair" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
             </div>
@@ -1433,8 +1433,33 @@
 
         // Gerar perfil do usuário
         function generateUserProfile() {
-            const randomUsername = usernames[Math.floor(Math.random() * usernames.length)];
-            document.getElementById('userName').textContent = '@' + randomUsername;
+            // Verificar se há usuário logado
+            const loggedUser = localStorage.getItem('socialmoeda_user');
+            
+            if (loggedUser) {
+                // Usar dados do usuário logado
+                const userDisplayNames = {
+                    'admin': '@admin_oficial',
+                    'socialmoeda': '@socialmoeda_master',
+                    'demo': '@demo_user',
+                    'teste': '@teste_account',
+                    'user': '@user_social'
+                };
+                
+                const displayName = userDisplayNames[loggedUser] || '@' + loggedUser;
+                document.getElementById('userName').textContent = displayName;
+                
+                // Definir tipo de usuário para benefícios especiais
+                if (loggedUser === 'admin' || loggedUser === 'socialmoeda') {
+                    // Usuários admin começam com mais moedas
+                    userCoins = 250.0;
+                    document.querySelector('.user-details p').textContent = 'Administrador';
+                }
+            } else {
+                // Usuário padrão (não logado)
+                const randomUsername = usernames[Math.floor(Math.random() * usernames.length)];
+                document.getElementById('userName').textContent = '@' + randomUsername;
+            }
         }
 
         // Gerar stories
@@ -1797,8 +1822,40 @@
             closeSaqueModal();
         }
 
+        // Função de logout
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                // Limpar dados salvos (opcional - manter se "lembrar" estiver marcado)
+                const shouldRemember = localStorage.getItem('socialmoeda_remember') === 'true';
+                if (!shouldRemember) {
+                    localStorage.removeItem('socialmoeda_user');
+                    localStorage.removeItem('socialmoeda_remember');
+                }
+                
+                // Redirecionar para a página inicial
+                window.location.href = '/';
+            }
+        }
+
+        // Verificar se usuário está logado ao carregar página
+        function checkAuthentication() {
+            const loggedUser = localStorage.getItem('socialmoeda_user');
+            if (!loggedUser) {
+                // Se não estiver logado, redirecionar para login
+                alert('Sessão expirada. Redirecionando para o login.');
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
         // Inicializar quando a página carregar
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar autenticação primeiro
+            if (checkAuthentication()) {
+                init();
+            }
+        });
 
         // Posts adicionais para scroll infinito
         const morePosts = [
