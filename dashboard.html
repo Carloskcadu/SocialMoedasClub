@@ -410,12 +410,29 @@
         }
 
         .follow-btn {
-            background: none;
+            background: #0095f6;
+            color: white;
             border: none;
-            color: #0095f6;
+            padding: 6px 16px;
+            border-radius: 4px;
             font-weight: 600;
             cursor: pointer;
             font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .follow-btn:hover {
+            background: #0077cc;
+        }
+
+        .follow-btn.following {
+            background: #efefef;
+            color: #262626;
+            border: 1px solid #dbdbdb;
+        }
+
+        .follow-btn.following:hover {
+            background: #e0e0e0;
         }
 
         /* Coin Animation */
@@ -671,33 +688,6 @@
             pointer-events: none;
         }
 
-        /* Follow buttons */
-        .follow-btn {
-            background: #0095f6;
-            color: white;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 4px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .follow-btn:hover {
-            background: #0077cc;
-        }
-
-        .follow-btn.following {
-            background: #efefef;
-            color: #262626;
-            border: 1px solid #dbdbdb;
-        }
-
-        .follow-btn.following:hover {
-            background: #e0e0e0;
-        }
-
         /* Enhanced post actions */
         .post-stats {
             padding: 0 16px 8px;
@@ -714,15 +704,6 @@
         }
 
         /* Coin animation enhanced */
-        .coin-animation {
-            position: fixed;
-            pointer-events: none;
-            font-size: 20px;
-            font-weight: bold;
-            z-index: 10000;
-            animation: coinFloat 2s ease-out forwards;
-        }
-
         .coin-animation.story-coin {
             font-size: 24px;
             color: #ffd700;
@@ -739,7 +720,7 @@
     <header class="header">
         <div class="header-content">
             <div class="logo-section">
-                <img src="https://i.postimg.cc/XGhNt3fh/logo.png" alt="SocialMoeda Club" class="logo">
+                <img src="axGqg3_O0iq-ZgO3uzyk-" alt="SocialMoeda Club" class="logo">
                 <div class="logo-text">SocialMoeda</div>
             </div>
             
@@ -891,12 +872,12 @@
                 <button class="story-close" onclick="closeStory()">×</button>
             </div>
             <img src="" alt="" class="story-image" id="storyImage">
-            <button class="story-action-btn" onclick="likeStory()">👍 Curtir Story (+1.0 moeda)</button>
+            <button class="story-action-btn" onclick="likeStory()">👍 Curtir Story (+0.5 moeda)</button>
         </div>
     </div>
 
     <!-- Modal de Saque -->
-    <div id="saqueModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 10000; display: flex; align-items: center; justify-content: center;">
+    <div id="saqueModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 10000; align-items: center; justify-content: center;">
         <div style="background: white; padding: 30px; border-radius: 12px; max-width: 400px; width: 90%;">
             <h3 style="margin-bottom: 20px; text-align: center;">💰 Sacar Moedas</h3>
             <div style="text-align: center; margin-bottom: 20px;">
@@ -1825,6 +1806,11 @@
         // Função de logout
         function logout() {
             if (confirm('Tem certeza que deseja sair?')) {
+                console.log('🚪 Fazendo logout...');
+                
+                // Limpar dados de autenticação
+                localStorage.removeItem('socialmoeda_logged_in');
+                
                 // Limpar dados salvos (opcional - manter se "lembrar" estiver marcado)
                 const shouldRemember = localStorage.getItem('socialmoeda_remember') === 'true';
                 if (!shouldRemember) {
@@ -1833,19 +1819,25 @@
                 }
                 
                 // Redirecionar para a página inicial
-                window.location.href = '/';
+                window.location.replace('index.html');
             }
         }
 
         // Verificar se usuário está logado ao carregar página
         function checkAuthentication() {
             const loggedUser = localStorage.getItem('socialmoeda_user');
-            if (!loggedUser) {
-                // Se não estiver logado, redirecionar para login
-                alert('Sessão expirada. Redirecionando para o login.');
-                window.location.href = 'login.html';
+            const isLoggedIn = localStorage.getItem('socialmoeda_logged_in');
+            
+            console.log('🔍 Verificando autenticação:', { loggedUser, isLoggedIn });
+            
+            if (!loggedUser || isLoggedIn !== 'true') {
+                console.log('❌ Usuário não autenticado, redirecionando...');
+                alert('Acesso negado. Faça login primeiro.');
+                window.location.replace('login.html');
                 return false;
             }
+            
+            console.log('✅ Usuário autenticado:', loggedUser);
             return true;
         }
 
