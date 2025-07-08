@@ -543,7 +543,7 @@
                     </div>
                 </div>
                 <div class="header-login">
-                    <a href="#" onclick="openLoginPage(); return false;"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="javascript:void(0)" onclick="scrollToLogin()"><i class="fas fa-sign-in-alt"></i> Login</a>
                 </div>
             </div>
         </div>
@@ -721,10 +721,341 @@
             observer.observe(el);
         });
 
-        // Função para abrir a página de login
-        function openLoginPage() {
-            // Simular abertura da página de login
-            const loginWindow = window.open('', 'login', 'width=500,height=700,scrollbars=yes,resizable=yes');
+        // Função para ir para a página de login
+        function scrollToLogin() {
+            // Abrir página de login em nova janela
+            const loginWindow = window.open('', 'loginWindow', 'width=450,height=650,scrollbars=yes,resizable=yes');
+            
+            // HTML da página de login
+            const loginHTML = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SocialMoeda Club</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #262626;
+            padding: 20px;
+        }
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #e1306c;
+            box-shadow: 0 8px 25px rgba(225,48,108,0.3);
+            margin-bottom: 15px;
+        }
+        .login-header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, #f09433, #e6683c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .login-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-group {
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.85rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #e1306c;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(225,48,108,0.1);
+        }
+        .form-group .icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+        .password-toggle:hover {
+            color: #e1306c;
+        }
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+        }
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        .remember-me input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        .login-button {
+            background: linear-gradient(45deg, #f09433, #e6683c);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(240,148,51,0.3);
+            margin-top: 8px;
+        }
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(240,148,51,0.4);
+        }
+        .signup-link {
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        .signup-link a {
+            color: #e1306c;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        .login-message {
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        .login-message.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .login-message.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .loading .login-button::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            margin: auto;
+            border: 2px solid transparent;
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <img src="axGqg3_O0iq-ZgO3uzyk-" alt="SocialMoeda Club Logo" class="logo">
+            <h1>SocialMoeda Club</h1>
+            <p>Faça login para começar a ganhar</p>
+        </div>
+        <form class="login-form" id="loginForm">
+            <div class="form-group">
+                <label for="login">Usuário</label>
+                <input type="text" id="login" name="login" placeholder="Digite seu usuário" required>
+                <i class="fas fa-user icon"></i>
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+            </div>
+            <div class="login-options">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    Lembrar de mim
+                </label>
+            </div>
+            <button type="submit" class="login-button">
+                <i class="fas fa-sign-in-alt"></i> Entrar
+            </button>
+        </form>
+        <div class="signup-link">
+            <p>Não tem uma conta? <a href="#" onclick="window.close(); window.opener.location.href='#planos';">Cadastre-se aqui</a></p>
+        </div>
+    </div>
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const senhaInput = document.getElementById('senha');
+        togglePassword.addEventListener('click', function() {
+            const type = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            senhaInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+        
+        const validCredentials = {
+            'admin': 'admin123',
+            'socialmoeda': 'social2025',
+            'demo': 'demo123',
+            'teste': 'teste123',
+            'user': 'user123'
+        };
+        
+        const loginForm = document.getElementById('loginForm');
+        const loginContainer = document.querySelector('.login-container');
+        
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('login').value.trim();
+            const password = document.getElementById('senha').value.trim();
+            const remember = document.getElementById('remember').checked;
+            
+            if (!username || !password) {
+                showLoginMessage('Por favor, preencha todos os campos.', 'error');
+                return;
+            }
+            
+            loginContainer.classList.add('loading');
+            
+            setTimeout(() => {
+                if (validCredentials.hasOwnProperty(username) && validCredentials[username] === password) {
+                    localStorage.setItem('socialmoeda_user', username);
+                    localStorage.setItem('socialmoeda_logged_in', 'true');
+                    if (remember) {
+                        localStorage.setItem('socialmoeda_remember', 'true');
+                    }
+                    showLoginMessage('Login realizado com sucesso!', 'success');
+                    loginContainer.classList.remove('loading');
+                    setTimeout(() => {
+                        alert('Login realizado com sucesso! Redirecionando para o feed...');
+                        window.close();
+                        if (window.opener) {
+                            window.opener.location.reload();
+                        }
+                    }, 1000);
+                } else {
+                    loginContainer.classList.remove('loading');
+                    showLoginMessage('Usuário ou senha incorretos.', 'error');
+                    document.getElementById('senha').value = '';
+                }
+            }, 1000);
+        });
+        
+        function showLoginMessage(message, type) {
+            const existingMessage = document.querySelector('.login-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            const messageEl = document.createElement('div');
+            messageEl.className = 'login-message ' + type;
+            messageEl.textContent = message;
+            loginForm.parentNode.insertBefore(messageEl, loginForm);
+            setTimeout(() => {
+                messageEl.remove();
+            }, 4000);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const rememberedUser = localStorage.getItem('socialmoeda_user');
+            const rememberFlag = localStorage.getItem('socialmoeda_remember');
+            if (rememberedUser && rememberFlag === 'true') {
+                document.getElementById('login').value = rememberedUser;
+                document.getElementById('remember').checked = true;
+                document.getElementById('senha').focus();
+            } else {
+                document.getElementById('login').focus();
+            }
+        });
+    </script>
+</body>
+</html>`;
+            
+            loginWindow.document.write(loginHTML);
+            loginWindow.document.close();
+        }
             
             // HTML da página de login sem template literals
             const loginHTML = '<!DOCTYPE html>\n' +
