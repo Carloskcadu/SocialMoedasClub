@@ -441,29 +441,6 @@
             color: #e1306c;
         }
 
-        /* Footer */
-        .login {
-            background: white;
-            text-align: center;
-            padding: 40px 0;
-            border-top: 1px solid #eee;
-        }
-
-        .login p {
-            font-size: 1.1rem;
-            color: #666;
-        }
-
-        .login a {
-            color: #e1306c;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .login a:hover {
-            text-decoration: underline;
-        }
-
         /* Responsive Design */
         @media (max-width: 768px) {
             .header-content {
@@ -539,6 +516,19 @@
         .fade-in-up {
             animation: fadeInUp 0.6s ease-out;
         }
+
+        /* Placeholder for missing images */
+        .placeholder-image {
+            background: linear-gradient(45deg, #f09433, #e6683c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
@@ -546,14 +536,14 @@
         <div class="container">
             <div class="header-content">
                 <div class="header-brand">
-                    <img src="https://i.postimg.cc/XGhNt3fh/logo.png" alt="SocialMoeda Club Logo" class="logo">
+                    <img src="axGqg3_O0iq-ZgO3uzyk-" alt="SocialMoeda Club Logo" class="logo">
                     <div class="header-text">
                         <h1>SocialMoeda Club</h1>
                         <p>Transforme suas curtidas em dinheiro real</p>
                     </div>
                 </div>
                 <div class="header-login">
-                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="#" onclick="openLoginPage(); return false;"><i class="fas fa-sign-in-alt"></i> Login</a>
                 </div>
             </div>
         </div>
@@ -563,7 +553,7 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-image">
-                    <img src="https://i.postimg.cc/MMXKsXQV/foto-1.png" alt="Mulher sorrindo com celular e notificações de PIX recebido do SocialMoeda Club" />
+                    <img src="OcJBmCyGSGTp05kpr8tJi" alt="Mulher sorrindo com celular e notificações de PIX recebido do SocialMoeda Club" />
                 </div>
                 <div class="hero-text">
                     <h2>Ganhe Dinheiro Curtindo Posts de Famosos</h2>
@@ -643,7 +633,7 @@
                         <li>Suporte por email</li>
                         <li>Campanhas básicas</li>
                     </ul>
-                    <a href="https://go.disruptybr.com.br/ihlxglwu87" class="btn" target="_blank">Assinar Agora</a>
+                    <a href="https://go.disruptybr.com.br/ihlxglwu87" class="btn">Assinar Agora</a>
                 </div>
                 <div class="plano plano-popular">
                     <h4>Premium</h4>
@@ -656,7 +646,7 @@
                         <li>Campanhas premium</li>
                         <li>Bônus de fidelidade</li>
                     </ul>
-                    <a href="https://go.disruptybr.com.br/eqzacktwke" class="btn" target="_blank">Assinar Agora</a>
+                    <a href="https://go.disruptybr.com.br/eqzacktwke" class="btn">Assinar Agora</a>
                 </div>
                 <div class="plano">
                     <h4>VIP</h4>
@@ -667,7 +657,7 @@
                         <li>Campanhas exclusivas</li>
                         <li>Mentor pessoal</li>
                     </ul>
-                    <a href="#" class="btn">Assinar Agora</a>
+                    <a href="https://go.disruptybr.com.br/zcjo82jbyu" class="btn">Assinar Agora</a>
                 </div>
             </div>
         </div>
@@ -699,16 +689,17 @@
         </div>
     </section>
 
-
-
     <script>
         // Smooth scroll para links internos
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
 
@@ -729,6 +720,339 @@
         document.querySelectorAll('.feature-card, .plano, .testimonial').forEach(el => {
             observer.observe(el);
         });
+
+        // Função para abrir a página de login
+        function openLoginPage() {
+            // Simular abertura da página de login
+            const loginWindow = window.open('', 'login', 'width=500,height=700,scrollbars=yes,resizable=yes');
+            
+            // HTML da página de login sem template literals
+            const loginHTML = '<!DOCTYPE html>\n' +
+'<html lang="pt-BR">\n' +
+'<head>\n' +
+'    <meta charset="UTF-8">\n' +
+'    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+'    <title>Login - SocialMoeda Club</title>\n' +
+'    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">\n' +
+'    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">\n' +
+'    <style>\n' +
+'        * { margin: 0; padding: 0; box-sizing: border-box; }\n' +
+'        body {\n' +
+'            font-family: "Poppins", sans-serif;\n' +
+'            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);\n' +
+'            min-height: 100vh;\n' +
+'            display: flex;\n' +
+'            align-items: center;\n' +
+'            justify-content: center;\n' +
+'            color: #262626;\n' +
+'            padding: 20px;\n' +
+'        }\n' +
+'        .login-container {\n' +
+'            background: white;\n' +
+'            border-radius: 20px;\n' +
+'            box-shadow: 0 20px 60px rgba(0,0,0,0.2);\n' +
+'            padding: 40px;\n' +
+'            width: 100%;\n' +
+'            max-width: 400px;\n' +
+'            position: relative;\n' +
+'            overflow: hidden;\n' +
+'        }\n' +
+'        .login-container::before {\n' +
+'            content: "";\n' +
+'            position: absolute;\n' +
+'            top: 0;\n' +
+'            left: 0;\n' +
+'            right: 0;\n' +
+'            height: 5px;\n' +
+'            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);\n' +
+'        }\n' +
+'        .login-header {\n' +
+'            text-align: center;\n' +
+'            margin-bottom: 30px;\n' +
+'        }\n' +
+'        .logo {\n' +
+'            width: 60px;\n' +
+'            height: 60px;\n' +
+'            border-radius: 50%;\n' +
+'            object-fit: cover;\n' +
+'            border: 3px solid #e1306c;\n' +
+'            box-shadow: 0 8px 25px rgba(225,48,108,0.3);\n' +
+'            margin-bottom: 15px;\n' +
+'        }\n' +
+'        .login-header h1 {\n' +
+'            font-size: 1.8rem;\n' +
+'            font-weight: 800;\n' +
+'            margin-bottom: 8px;\n' +
+'            background: linear-gradient(45deg, #f09433, #e6683c);\n' +
+'            -webkit-background-clip: text;\n' +
+'            -webkit-text-fill-color: transparent;\n' +
+'            background-clip: text;\n' +
+'        }\n' +
+'        .login-header p {\n' +
+'            color: #666;\n' +
+'            font-size: 0.9rem;\n' +
+'        }\n' +
+'        .login-form {\n' +
+'            display: flex;\n' +
+'            flex-direction: column;\n' +
+'            gap: 20px;\n' +
+'        }\n' +
+'        .form-group {\n' +
+'            position: relative;\n' +
+'        }\n' +
+'        .form-group label {\n' +
+'            display: block;\n' +
+'            margin-bottom: 6px;\n' +
+'            font-weight: 600;\n' +
+'            color: #333;\n' +
+'            font-size: 0.85rem;\n' +
+'        }\n' +
+'        .form-group input {\n' +
+'            width: 100%;\n' +
+'            padding: 12px 40px 12px 15px;\n' +
+'            border: 2px solid #e1e5e9;\n' +
+'            border-radius: 10px;\n' +
+'            font-size: 0.9rem;\n' +
+'            font-family: "Poppins", sans-serif;\n' +
+'            transition: all 0.3s ease;\n' +
+'            background: #fafafa;\n' +
+'        }\n' +
+'        .form-group input:focus {\n' +
+'            outline: none;\n' +
+'            border-color: #e1306c;\n' +
+'            background: white;\n' +
+'            box-shadow: 0 0 0 3px rgba(225,48,108,0.1);\n' +
+'        }\n' +
+'        .form-group .icon {\n' +
+'            position: absolute;\n' +
+'            right: 15px;\n' +
+'            top: 50%;\n' +
+'            transform: translateY(-50%);\n' +
+'            color: #999;\n' +
+'            font-size: 1rem;\n' +
+'            margin-top: 10px;\n' +
+'        }\n' +
+'        .password-toggle {\n' +
+'            position: absolute;\n' +
+'            right: 15px;\n' +
+'            top: 50%;\n' +
+'            transform: translateY(-50%);\n' +
+'            cursor: pointer;\n' +
+'            color: #999;\n' +
+'            font-size: 1rem;\n' +
+'            margin-top: 10px;\n' +
+'            transition: color 0.3s ease;\n' +
+'        }\n' +
+'        .password-toggle:hover {\n' +
+'            color: #e1306c;\n' +
+'        }\n' +
+'        .login-options {\n' +
+'            display: flex;\n' +
+'            justify-content: space-between;\n' +
+'            align-items: center;\n' +
+'            margin: 8px 0;\n' +
+'        }\n' +
+'        .remember-me {\n' +
+'            display: flex;\n' +
+'            align-items: center;\n' +
+'            gap: 6px;\n' +
+'            font-size: 0.8rem;\n' +
+'            color: #666;\n' +
+'        }\n' +
+'        .remember-me input[type="checkbox"] {\n' +
+'            width: auto;\n' +
+'            margin: 0;\n' +
+'        }\n' +
+'        .login-button {\n' +
+'            background: linear-gradient(45deg, #f09433, #e6683c);\n' +
+'            color: white;\n' +
+'            border: none;\n' +
+'            padding: 14px 20px;\n' +
+'            border-radius: 10px;\n' +
+'            font-size: 1rem;\n' +
+'            font-weight: 600;\n' +
+'            font-family: "Poppins", sans-serif;\n' +
+'            cursor: pointer;\n' +
+'            transition: all 0.3s ease;\n' +
+'            box-shadow: 0 8px 25px rgba(240,148,51,0.3);\n' +
+'            margin-top: 8px;\n' +
+'        }\n' +
+'        .login-button:hover {\n' +
+'            transform: translateY(-2px);\n' +
+'            box-shadow: 0 12px 35px rgba(240,148,51,0.4);\n' +
+'        }\n' +
+'        .signup-link {\n' +
+'            text-align: center;\n' +
+'            margin-top: 15px;\n' +
+'            color: #666;\n' +
+'            font-size: 0.85rem;\n' +
+'        }\n' +
+'        .signup-link a {\n' +
+'            color: #e1306c;\n' +
+'            text-decoration: none;\n' +
+'            font-weight: 600;\n' +
+'        }\n' +
+'        .signup-link a:hover {\n' +
+'            text-decoration: underline;\n' +
+'        }\n' +
+'        .login-message {\n' +
+'            padding: 10px 15px;\n' +
+'            border-radius: 6px;\n' +
+'            margin-bottom: 15px;\n' +
+'            font-size: 0.8rem;\n' +
+'            font-weight: 600;\n' +
+'            text-align: center;\n' +
+'        }\n' +
+'        .login-message.success {\n' +
+'            background: #d4edda;\n' +
+'            border: 1px solid #c3e6cb;\n' +
+'            color: #155724;\n' +
+'        }\n' +
+'        .login-message.error {\n' +
+'            background: #f8d7da;\n' +
+'            border: 1px solid #f5c6cb;\n' +
+'            color: #721c24;\n' +
+'        }\n' +
+'        .loading {\n' +
+'            opacity: 0.7;\n' +
+'            pointer-events: none;\n' +
+'        }\n' +
+'        .loading .login-button::after {\n' +
+'            content: "";\n' +
+'            position: absolute;\n' +
+'            width: 16px;\n' +
+'            height: 16px;\n' +
+'            margin: auto;\n' +
+'            border: 2px solid transparent;\n' +
+'            border-top-color: white;\n' +
+'            border-radius: 50%;\n' +
+'            animation: spin 1s linear infinite;\n' +
+'        }\n' +
+'        @keyframes spin {\n' +
+'            0% { transform: rotate(0deg); }\n' +
+'            100% { transform: rotate(360deg); }\n' +
+'        }\n' +
+'    </style>\n' +
+'</head>\n' +
+'<body>\n' +
+'    <div class="login-container">\n' +
+'        <div class="login-header">\n' +
+'            <img src="axGqg3_O0iq-ZgO3uzyk-" alt="SocialMoeda Club Logo" class="logo">\n' +
+'            <h1>SocialMoeda Club</h1>\n' +
+'            <p>Faça login para começar a ganhar</p>\n' +
+'        </div>\n' +
+'        <form class="login-form" id="loginForm">\n' +
+'            <div class="form-group">\n' +
+'                <label for="login">Usuário</label>\n' +
+'                <input type="text" id="login" name="login" placeholder="Digite seu usuário" required>\n' +
+'                <i class="fas fa-user icon"></i>\n' +
+'            </div>\n' +
+'            <div class="form-group">\n' +
+'                <label for="senha">Senha</label>\n' +
+'                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>\n' +
+'                <i class="fas fa-eye password-toggle" id="togglePassword"></i>\n' +
+'            </div>\n' +
+'            <div class="login-options">\n' +
+'                <label class="remember-me">\n' +
+'                    <input type="checkbox" id="remember" name="remember">\n' +
+'                    Lembrar de mim\n' +
+'                </label>\n' +
+'            </div>\n' +
+'            <button type="submit" class="login-button">\n' +
+'                <i class="fas fa-sign-in-alt"></i> Entrar\n' +
+'            </button>\n' +
+'        </form>\n' +
+'        <div class="signup-link">\n' +
+'            <p>Não tem uma conta? <a href="javascript:window.close(); window.opener.location.href=\'#planos\';">Cadastre-se aqui</a></p>\n' +
+'        </div>\n' +
+'    </div>\n' +
+'    <script>\n' +
+'        const togglePassword = document.getElementById("togglePassword");\n' +
+'        const senhaInput = document.getElementById("senha");\n' +
+'        togglePassword.addEventListener("click", function() {\n' +
+'            const type = senhaInput.getAttribute("type") === "password" ? "text" : "password";\n' +
+'            senhaInput.setAttribute("type", type);\n' +
+'            this.classList.toggle("fa-eye");\n' +
+'            this.classList.toggle("fa-eye-slash");\n' +
+'        });\n' +
+'        \n' +
+'        const validCredentials = {\n' +
+'            "admin": "admin123",\n' +
+'            "socialmoeda": "social2025",\n' +
+'            "demo": "demo123",\n' +
+'            "teste": "teste123",\n' +
+'            "user": "user123"\n' +
+'        };\n' +
+'        \n' +
+'        const loginForm = document.getElementById("loginForm");\n' +
+'        const loginContainer = document.querySelector(".login-container");\n' +
+'        \n' +
+'        loginForm.addEventListener("submit", function(e) {\n' +
+'            e.preventDefault();\n' +
+'            const username = document.getElementById("login").value.trim();\n' +
+'            const password = document.getElementById("senha").value.trim();\n' +
+'            const remember = document.getElementById("remember").checked;\n' +
+'            \n' +
+'            if (!username || !password) {\n' +
+'                showLoginMessage("Por favor, preencha todos os campos.", "error");\n' +
+'                return;\n' +
+'            }\n' +
+'            \n' +
+'            loginContainer.classList.add("loading");\n' +
+'            \n' +
+'            setTimeout(() => {\n' +
+'                if (validCredentials.hasOwnProperty(username) && validCredentials[username] === password) {\n' +
+'                    localStorage.setItem("socialmoeda_user", username);\n' +
+'                    localStorage.setItem("socialmoeda_logged_in", "true");\n' +
+'                    if (remember) {\n' +
+'                        localStorage.setItem("socialmoeda_remember", "true");\n' +
+'                    }\n' +
+'                    showLoginMessage("Login realizado com sucesso!", "success");\n' +
+'                    loginContainer.classList.remove("loading");\n' +
+'                    setTimeout(() => {\n' +
+'                        alert("Login realizado com sucesso! Usuario: " + username);\n' +
+'                        window.close();\n' +
+'                    }, 1000);\n' +
+'                } else {\n' +
+'                    loginContainer.classList.remove("loading");\n' +
+'                    showLoginMessage("Usuário ou senha incorretos.", "error");\n' +
+'                    document.getElementById("senha").value = "";\n' +
+'                }\n' +
+'            }, 1000);\n' +
+'        });\n' +
+'        \n' +
+'        function showLoginMessage(message, type) {\n' +
+'            const existingMessage = document.querySelector(".login-message");\n' +
+'            if (existingMessage) {\n' +
+'                existingMessage.remove();\n' +
+'            }\n' +
+'            const messageEl = document.createElement("div");\n' +
+'            messageEl.className = "login-message " + type;\n' +
+'            messageEl.textContent = message;\n' +
+'            loginForm.parentNode.insertBefore(messageEl, loginForm);\n' +
+'            setTimeout(() => {\n' +
+'                messageEl.remove();\n' +
+'            }, 4000);\n' +
+'        }\n' +
+'        \n' +
+'        document.addEventListener("DOMContentLoaded", function() {\n' +
+'            const rememberedUser = localStorage.getItem("socialmoeda_user");\n' +
+'            const rememberFlag = localStorage.getItem("socialmoeda_remember");\n' +
+'            if (rememberedUser && rememberFlag === "true") {\n' +
+'                document.getElementById("login").value = rememberedUser;\n' +
+'                document.getElementById("remember").checked = true;\n' +
+'                document.getElementById("senha").focus();\n' +
+'            } else {\n' +
+'                document.getElementById("login").focus();\n' +
+'            }\n' +
+'        });\n' +
+'    </script>\n' +
+'</body>\n' +
+'</html>';
+            
+            loginWindow.document.write(loginHTML);
+            loginWindow.document.close();
+        }
     </script>
 </body>
 </html>
